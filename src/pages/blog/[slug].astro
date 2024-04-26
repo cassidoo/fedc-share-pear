@@ -21,7 +21,7 @@ if (
 	markdown === "null" ||
 	markdown === ""
 ) {
-	markdown = `## No content found! \n Head back to [Brainstory](https://app.brainstory.ai) to think smarter, not harder. We can't wait to see what you think of next!`;
+	markdown = `## No content found! \n No worries. Just head over to your markdown website, and it'll all be generated here!`;
 }
 
 let renderContent = `${markdown.replace(/\\n/g, "\n")}`;
@@ -39,7 +39,7 @@ const wordCount = plainTextWithoutFormatting.trim().split(/\s+/).length;
 const readingTime = Math.ceil(wordCount / 200);
 ---
 
-<Layout title="Brainstory Idea Preview">
+<Layout title="Preview">
 	<div class="blog-info">
 		<span>{month} {day}</span>
 		<span>{readingTime} min read</span>
@@ -52,11 +52,6 @@ const readingTime = Math.ceil(wordCount / 200);
 				allowComments: true
 			}}
 		/>
-	</div>
-
-	<div class="blog-end">
-		You've reached the end of the idea! Ready for more?
-		<a href="https://app.brainstory.ai">Create one here!</a>
 	</div>
 
 	<p class="small">
