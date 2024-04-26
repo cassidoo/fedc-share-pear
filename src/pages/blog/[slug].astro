@@ -1,0 +1,81 @@
+---
+import { Markdown } from "astro-remote";
+import Layout from "../../layouts/Layout.astro";
+
+let markdown = Astro.request.headers.get("markdown");
+
+markdown = decodeURIComponent(markdown);
+
+async function getDate() {
+	return new Date().toLocaleString();
+}
+const date = await getDate();
+// Get month and day from date
+const [month, day] = new Date(date)
+	.toLocaleDateString("en-US", { month: "long", day: "numeric" })
+	.split(" ");
+
+if (
+	markdown === undefined ||
+	markdown === null ||
+	markdown === "null" ||
+	markdown === ""
+) {
+	markdown = `## No content found! \n Head back to [Brainstory](https://app.brainstory.ai) to think smarter, not harder. We can't wait to see what you think of next!`;
+}
+
+let renderContent = `${markdown.replace(/\\n/g, "\n")}`;
+
+// Calculate reading time for markdown
+// Remove headings & inline Markdown formatting (bold, italic, etc.)
+const plainTextWithoutFormatting = markdown
+	.replace(/^#+\s+(.*)$/gm, "")
+	.replace(/(\*|_){1,2}(\S+)\1{1,2}|`{1,2}(\S+)`{1,2}/g, "$2$3");
+
+// Count the number of words in the plain text
+const wordCount = plainTextWithoutFormatting.trim().split(/\s+/).length;
+
+// Calculate the reading time in minutes (Assuming average reading speed of 200 words per minute)
+const readingTime = Math.ceil(wordCount / 200);
+---
+
+<Layout title="Brainstory Idea Preview">
+	<div class="blog-info">
+		<span>{month} {day}</span>
+		<span>{readingTime} min read</span>
+	</div>
+
+	<div class="blog">
+		<Markdown
+			content={renderContent}
+			sanitize={{
+				allowComments: true
+			}}
+		/>
+	</div>
+
+	<div class="blog-end">
+		You've reached the end of the idea! Ready for more?
+		<a href="https://app.brainstory.ai">Create one here!</a>
+	</div>
+
+	<p class="small">
+		This is a <strong>public URL</strong> of this content, and will expire within
+		30 days!
+	</p>
+
+	<p class="small">This page generated at: {date}</p>
+
+	<!-- If we ever need to debug this, here's the headers passed from the API -->
+	<!-- <p>
+			Received request headers:
+			<code>
+				{JSON.stringify(Object.fromEntries(Astro.request.headers))}
+			</code>
+			<br />
+			And response headers:
+			<code>
+				{JSON.stringify(Object.fromEntries(Astro.response.headers))}
+			</code>
+		</p> -->
+</Layout>
