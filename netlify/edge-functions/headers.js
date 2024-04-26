@@ -5,7 +5,7 @@ export default async (request, context) => {
 	let url = request.headers.get("origin");
 
 	let allowedUrlsRegex =
-		"https://jam-share-pear-markdown.netlify.app|localhost:8000";
+		/^(?:https?:\/\/(?:www\.)?codepen\.io\/\w+\/pen\/\w+|https?:\/\/localhost:8000\/\w+)$/;
 
 	// Handle preflight requests
 	if (request.method === "OPTIONS" && allowedUrlsRegex.test(url)) {
