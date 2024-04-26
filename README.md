@@ -26,10 +26,10 @@ You'll have to hard-code in some URI-encoded markdown in the url, for example
 
 ### 🪄 How to use the site in general
 
-1. Query `[this website]/blog/[SOMETHING]` with a GET request
+1. Query `https://fedc.netlify.app/blog/[SOMETHING]` with a GET request
 2. The headers of the GET request have to include `markdown: "blah"` where
    `blah` is the blog content. This request publishes your blog post at the
-   `[this website]/blog/[SOMETHING]` url for 30 days.
+   `https://fedc.netlify.app/blog/[SOMETHING]` url for 30 days.
 
 ### 💖 Learn more + Support
 
