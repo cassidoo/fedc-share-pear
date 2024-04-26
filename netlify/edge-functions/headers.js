@@ -5,7 +5,7 @@ export default async (request, context) => {
 	let url = request.headers.get("origin");
 
 	let allowedUrlsRegex =
-		/^(https?:\/\/)?(localhost(:\d+)?|https?:\/\/(?:www\.)?codepen\.io\/\w+\/pen\/\w+)$/;
+		/^(https?:\/\/)?(localhost(:\d+)?|https?:\/\/(?:www\.)?codepen\.io\/\w+\/(?:pen|live)\/\w+\S*|https?:\/\/(?:www\.)?cdpn\.io\/\w+\/fullpage\/\w+\S*)$/;
 
 	// Handle preflight requests
 	if (request.method === "OPTIONS" && allowedUrlsRegex.test(url)) {
